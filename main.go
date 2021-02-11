@@ -30,7 +30,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("Sound Value is ", soundSensorVal)
 		fmt.Println("encoder value is: ", g.GET_MOTOR_ENCODER_RIGHT)
 		time.Sleep(time.Second)
-
+		// test
 		/*
 				if ledOn {
 					gpg.SetLED(1, 0, 0, 0)
