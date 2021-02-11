@@ -16,7 +16,7 @@ import (
 //in other functions that this function calls. don't read from sensors or
 //use actuators frmo main or you will get a panic.
 //add
-func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, lidarSensor *i2c.LIDARLiteDriver, gpg *g.Driver) {
+func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, gpg *g.Driver, lidarSensor *i2c.LIDARLiteDriver, m map[int]int64) {
 	gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 	for {
 		sensorVal, err := lightSensor.Read()
@@ -39,16 +39,8 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("Light Value is ", sensorVal)
 		fmt.Println("Sound Value is ", soundSensorVal)
 		fmt.Println("encoder value: ", val)
-		fmt.Println("lidar value is ", lidarVal)
+		m[sensorVal] = val
 		time.Sleep(time.Second)
-
-		//if sensorVal > 2000 {
-		//	gpg.SetMotorDps(g.MOTOR_LEFT, 75)
-		//	gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
-		//} else {
-		//	gpg.SetMotorDps(g.MOTOR_LEFT, 0)
-		//	gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
-		//}
 
 		gpg.Start()
 
@@ -83,15 +75,16 @@ func main() {
 	//the robot framework will create a new thread and run this function
 	//I'm calling my robot main loop here. Pass any of the variables we created
 	//above to that function if you need them
+	m := make(map[int]int64)
 	mainRobotFunc := func() {
-		robotRunLoop(lightSensor, soundSensor, lidarSensor, gopigo3)
+		robotRunLoop(lightSensor, soundSensor, gopigo3, lidarSensor, m)
 	}
 
 	//this is the crux of the gobot framework. The factory function to create a new robot
 	//struct (go uses structs and not objects) It takes four parameters
 	robot := gobot.NewRobot("gopigo3sensorChecker", //first a name
-		[]gobot.Connection{raspiAdaptor},                  //next a slice of connections to one or more robot controllers
-		[]gobot.Device{gopigo3, lightSensor, soundSensor}, //next a slice of one or more sensors and actuators for the robots
+		[]gobot.Connection{raspiAdaptor},                               //next a slice of connections to one or more robot controllers
+		[]gobot.Device{gopigo3, lightSensor, soundSensor, lidarSensor}, //next a slice of one or more sensors and actuators for the robots
 		mainRobotFunc, //the variable holding the function to run in a new thread as the main function
 	)
 
