@@ -28,7 +28,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 		fmt.Println("Light Value is ", sensorVal)
 		fmt.Println("Sound Value is ", soundSensorVal)
-		fmt.Println("encoder value: ", g.GET_MOTOR_ENCODER_RIGHT)
+		fmt.Println("encoder value: ", g.GET_MOTOR_ENCODER_LEFT)
 		time.Sleep(time.Second)
 
 		//if sensorVal > 2000 {
