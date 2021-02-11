@@ -31,20 +31,20 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("encoder value is: ", g.GET_MOTOR_ENCODER_RIGHT)
 		time.Sleep(time.Second)
 
-		/*if sensorVal < 1000 {
-			if ledOn {
-				gpg.SetLED(1, 0, 0, 0)
-				ledOn = false
+		/*
+				if ledOn {
+					gpg.SetLED(1, 0, 0, 0)
+					ledOn = false
+				} else {
+					gpg.SetLED(1, 200, 200, 200)
+					ledOn = !ledOn
+				}
+			} else if sensorVal > 2500 {
+				gpg.SetMotorDps(g.MOTOR_LEFT, 20)
+				gpg.Start()
 			} else {
-				gpg.SetLED(1, 200, 200, 200)
-				ledOn = !ledOn
-			}
-		} else if sensorVal > 2500 {
-			gpg.SetMotorDps(g.MOTOR_LEFT, 20)
-			gpg.Start()
-		} else {
 
-		}*/
+			}*/
 
 	}
 }
