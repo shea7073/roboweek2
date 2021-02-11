@@ -26,9 +26,13 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		if err != nil {
 			fmt.Errorf("Error reading from Sound Sensor %+v", err)
 		}
+		val, err := gpg.GetMotorEncoder(g.MOTOR_RIGHT)
+		if err != nil {
+			fmt.Errorf("Error reading from encoder %+v", err)
+		}
 		fmt.Println("Light Value is ", sensorVal)
 		fmt.Println("Sound Value is ", soundSensorVal)
-		fmt.Println("encoder value: ", interface{}(gpg.GetMotorEncoder(g.MOTOR_RIGHT)))
+		fmt.Println("encoder value: ", val)
 		time.Sleep(time.Second)
 
 		//if sensorVal > 2000 {
