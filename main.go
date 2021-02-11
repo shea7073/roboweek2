@@ -16,6 +16,7 @@ import (
 //use actuators frmo main or you will get a panic.
 //add
 func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, gpg *g.Driver) {
+	gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
 	for {
 		sensorVal, err := lightSensor.Read()
 		if err != nil {
@@ -27,6 +28,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 		fmt.Println("Light Value is ", sensorVal)
 		fmt.Println("Sound Value is ", soundSensorVal)
+		fmt.Println("encoder value is: ", g.GET_MOTOR_ENCODER_RIGHT)
 		time.Sleep(time.Second)
 
 		/*if sensorVal < 1000 {
@@ -74,4 +76,3 @@ func main() {
 
 	robot.Start() //actually run the function
 }
-
