@@ -29,7 +29,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("Sound Value is ", soundSensorVal)
 		time.Sleep(time.Second)
 
-		if sensorVal < 2000 {
+		if sensorVal > 2000 {
 			gpg.SetMotorDps(g.MOTOR_LEFT, 20)
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
 		} else {
