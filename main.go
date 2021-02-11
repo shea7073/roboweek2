@@ -16,7 +16,6 @@ import (
 //use actuators frmo main or you will get a panic.
 //add
 func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, gpg *g.Driver) {
-	gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
 	for {
 		sensorVal, err := lightSensor.Read()
 		if err != nil {
@@ -28,23 +27,32 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 		fmt.Println("Light Value is ", sensorVal)
 		fmt.Println("Sound Value is ", soundSensorVal)
-		fmt.Println("encoder value is: ", g.GET_MOTOR_ENCODER_RIGHT)
 		time.Sleep(time.Second)
-		// test
-		/*
-				if ledOn {
-					gpg.SetLED(1, 0, 0, 0)
-					ledOn = false
-				} else {
-					gpg.SetLED(1, 200, 200, 200)
-					ledOn = !ledOn
-				}
-			} else if sensorVal > 2500 {
-				gpg.SetMotorDps(g.MOTOR_LEFT, 20)
-				gpg.Start()
-			} else {
 
-			}*/
+		if sensorVal < 2000 {
+			gpg.SetMotorDps(g.MOTOR_LEFT, 20)
+			gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
+		} else {
+			gpg.SetMotorDps(g.MOTOR_LEFT, 0)
+			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
+		}
+
+		gpg.Start()
+
+		/*if sensorVal < 1000 {
+			if ledOn {
+				gpg.SetLED(1, 0, 0, 0)
+				ledOn = false
+			} else {
+				gpg.SetLED(1, 200, 200, 200)
+				ledOn = !ledOn
+			}
+		} else if sensorVal > 2500 {
+			gpg.SetMotorDps(g.MOTOR_LEFT, 20)
+			gpg.Start()
+		} else {
+
+		}*/
 
 	}
 }
@@ -76,3 +84,4 @@ func main() {
 
 	robot.Start() //actually run the function
 }
+
