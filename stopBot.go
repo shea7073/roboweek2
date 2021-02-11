@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"gobot.io/x/gobot"
 	"gobot.io/x/gobot/drivers/aio"
 	g "gobot.io/x/gobot/platforms/dexter/gopigo3"
 	"gobot.io/x/gobot/platforms/raspi"
-	"time"
+
 )
 
 //robotRunLoop is the main function for the robot, the gobot framework
