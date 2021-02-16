@@ -35,10 +35,10 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarS
 		if err != nil {
 			fmt.Errorf("Error reading from encoder %+v", err)
 		}
-		lidarVal, err := lidarSensor.Distance()
-		if err != nil {
-			fmt.Errorf("Error reading from lidar %+v", err)
-		}
+		//lidarVal, err := lidarSensor.Distance()
+		//if err != nil {
+		//	fmt.Errorf("Error reading from lidar %+v", err)
+		//}
 
 		fmt.Println("Light Value is ", sensorVal)
 		//fmt.Println("Sound Value is ", soundSensorVal)
