@@ -17,7 +17,7 @@ import (
 //use actuators frmo main or you will get a panic.
 //add
 func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarSensor *i2c.LIDARLiteDriver, m map[int]int64, key int) {
-	if key == 0 {
+	if key == 1 {
 		gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 	}
 	err := lidarSensor.Start()
@@ -44,7 +44,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarS
 
 		fmt.Println("Light Value is ", sensorVal)
 		//fmt.Println("Sound Value is ", soundSensorVal)
-		fmt.Println("encoder value: ", val)
+		fmt.Println("encoder value test: ", val)
 		m[sensorVal] = val
 		if sensorVal >= 3050 {
 			key = 1
