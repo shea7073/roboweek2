@@ -16,7 +16,7 @@ import (
 //in other functions that this function calls. don't read from sensors or
 //use actuators frmo main or you will get a panic.
 //add
-func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, gpg *g.Driver, lidarSensor *i2c.LIDARLiteDriver, m map[int]int64) {
+func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarSensor *i2c.LIDARLiteDriver, m map[int]int64) {
 	gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 	err := lidarSensor.Start()
 	if err != nil {
@@ -27,10 +27,10 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		if err != nil {
 			fmt.Errorf("Error reading light sensor %+v", err)
 		}
-		soundSensorVal, err := soundSensor.Read()
-		if err != nil {
-			fmt.Errorf("Error reading from Sound Sensor %+v", err)
-		}
+		//soundSensorVal, err := soundSensor.Read()
+		//if err != nil {
+		//	fmt.Errorf("Error reading from Sound Sensor %+v", err)
+		//}
 		val, err := gpg.GetMotorEncoder(g.MOTOR_RIGHT)
 		if err != nil {
 			fmt.Errorf("Error reading from encoder %+v", err)
@@ -41,7 +41,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 
 		fmt.Println("Light Value is ", sensorVal)
-		fmt.Println("Sound Value is ", soundSensorVal)
+		//fmt.Println("Sound Value is ", soundSensorVal)
 		fmt.Println("encoder value: ", val)
 		m[sensorVal] = val
 		time.Sleep(time.Second)
@@ -70,7 +70,7 @@ func main() {
 	raspiAdaptor := raspi.NewAdaptor()
 	gopigo3 := g.NewDriver(raspiAdaptor)
 	lightSensor := aio.NewGroveLightSensorDriver(gopigo3, "AD_2_1") //AnalogDigital Port 1 is "AD_1_1" this is port 2
-	soundSensor := aio.NewGroveSoundSensorDriver(gopigo3, "AD_1_1")
+	//soundSensor := aio.NewGroveSoundSensorDriver(gopigo3, "AD_1_1")
 	lidarSensor := i2c.NewLIDARLiteDriver(raspiAdaptor)
 	//end create hardware drivers
 
@@ -80,7 +80,7 @@ func main() {
 	//above to that function if you need them
 	m := make(map[int]int64)
 	mainRobotFunc := func() {
-		robotRunLoop(lightSensor, soundSensor, gopigo3, lidarSensor, m)
+		robotRunLoop(lightSensor, gopigo3, lidarSensor, m)
 	}
 
 	//this is the crux of the gobot framework. The factory function to create a new robot
