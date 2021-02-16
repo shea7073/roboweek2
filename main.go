@@ -47,7 +47,8 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarS
 		fmt.Println("encoder value: ", val)
 		m[sensorVal] = val
 		if sensorVal >= 3050 {
-			gpg.Halt()
+			*key = 1
+			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
 
 		}
 		time.Sleep(time.Second)
