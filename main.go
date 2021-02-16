@@ -46,7 +46,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarS
 		//fmt.Println("Sound Value is ", soundSensorVal)
 		fmt.Println("encoder value: ", val)
 		m[sensorVal] = val
-		if sensorVal >= 3060 {
+		if sensorVal >= 3050 {
 			key = 1
 
 		}
