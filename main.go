@@ -17,7 +17,7 @@ import (
 //use actuators frmo main or you will get a panic.
 //add
 func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarSensor *i2c.LIDARLiteDriver, m map[int]int64, key *int) {
-	if key == 0 {
+	if *key == 0 {
 		gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 	}
 	err := lidarSensor.Start()
