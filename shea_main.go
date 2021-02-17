@@ -18,7 +18,7 @@ import (
 //add
 func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, lidarSensor *i2c.LIDARLiteDriver, gpg *g.Driver) {
 
-	encode_vals := make([]int64, 500)
+	//encode_vals := make([]int64, 500)
 
 	err := lidarSensor.Start()
 	if err != nil {
@@ -48,15 +48,21 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("lidar value is ", lidarVal)
 		time.Sleep(time.Second)
 
-		if lidarVal < 30 {
-			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
-			gpg.SetMotorDps(g.MOTOR_LEFT, 0)
-		} else {
-			gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
+		start_val := val
+		current_val := val
+		for current_val < start_val + 1200 {
+			if lidarVal < 30 {
+				gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
+				gpg.SetMotorDps(g.MOTOR_LEFT, 0)
+			} else {
+				gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
+			}
+			current_val = val
 		}
 
-		encode_vals = append(encode_vals, val)
-		fmt.Println(encode_vals)
+
+		//encode_vals = append(encode_vals, val)
+		//fmt.Println(encode_vals)
 		//if sensorVal > 2000 {
 		//	gpg.SetMotorDps(g.MOTOR_LEFT, 75)
 		//	gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
