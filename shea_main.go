@@ -50,7 +50,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 
 		encode_vals = append(encode_vals, val)
 
-		for encode_vals[len(encode_vals)-1] < encode_vals[0] + 1200 {
+		if encode_vals[len(encode_vals)-1] < encode_vals[0] + 1200 {
 			if lidarVal < 30 {
 				gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
 				gpg.SetMotorDps(g.MOTOR_LEFT, 0)
