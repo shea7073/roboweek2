@@ -38,11 +38,6 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		lidarVal, err := lidarSensor.Distance()
 		if err != nil {
 			fmt.Errorf("Error reading from lidar %+v", err)
-		} else if lidarVal < 50 {
-			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
-			gpg.SetMotorDps(g.MOTOR_LEFT, 0)
-		} else {
-			continue
 		}
 
 		fmt.Println("Light Value is ", sensorVal)
@@ -50,6 +45,14 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("encoder value: ", val)
 		fmt.Println("lidar value is ", lidarVal)
 		time.Sleep(time.Second)
+
+		if lidarVal < 50 {
+			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
+			gpg.SetMotorDps(g.MOTOR_LEFT, 0)
+		} else {
+			continue
+		}
+
 
 		//if sensorVal > 2000 {
 		//	gpg.SetMotorDps(g.MOTOR_LEFT, 75)
