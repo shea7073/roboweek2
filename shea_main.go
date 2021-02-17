@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var encode_vals = make([]int64, 20)
+
 //robotRunLoop is the main function for the robot, the gobot framework
 //will spawn a new thread in the NewRobot factory functin and run this
 //function in that new thread. Do all of your work in this function and
@@ -17,8 +19,6 @@ import (
 //use actuators frmo main or you will get a panic.
 //add
 func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, lidarSensor *i2c.LIDARLiteDriver, gpg *g.Driver) {
-
-	//encode_vals := make([]int64, 20)
 
 	err := lidarSensor.Start()
 	if err != nil {
@@ -48,8 +48,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("lidar value is ", lidarVal)
 		time.Sleep(time.Second)
 
-		//encode_vals = append(encode_vals, val)
-		var counter int64 = 0
+		encode_vals = append(encode_vals, val)
 
 		if lidarVal < 30 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
@@ -58,12 +57,10 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 			}
 
-		if counter > 1200 {
+		if val > encode_vals[0] + 1200 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
 		}
-
-		counter += val
-
+		
 		//fmt.Println(encode_vals)
 		//if sensorVal > 2000 {
 		//	gpg.SetMotorDps(g.MOTOR_LEFT, 75)
