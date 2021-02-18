@@ -10,7 +10,8 @@ import (
 	"time"
 )
 
-var encode_vals = make([]int64, 20)
+var encode_vals = make([]int64, 1)
+var count int64 = 0
 
 //robotRunLoop is the main function for the robot, the gobot framework
 //will spawn a new thread in the NewRobot factory functin and run this
@@ -57,7 +58,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 			}
 
-		if val > encode_vals[len(encode_vals)-1] + 1200 {
+		if val > encode_vals[1] + 1200 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
 		}
 
