@@ -60,6 +60,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 
 		if val > encode_vals[1]+1200 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
+			fmt.Println(maxNumber(m))
 		}
 
 		fmt.Println(encode_vals)
