@@ -47,7 +47,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("Sound Value is ", soundSensorVal)
 		fmt.Println("encoder value: ", val)
 		fmt.Println("lidar value is ", lidarVal)
-		fmt.Println("Max light value is :", maxNumber(m))
+		fmt.Println("Max light value is :", maxNumber(m), "encoder value is: ", m[maxNumber(m)])
 		time.Sleep(time.Second)
 
 		encode_vals = append(encode_vals, val)
@@ -65,29 +65,8 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 
 		fmt.Println(encode_vals)
-		//if sensorVal > 2000 {
-		//	gpg.SetMotorDps(g.MOTOR_LEFT, 75)
-		//	gpg.SetMotorDps(g.MOTOR_RIGHT, 20)
-		//} else {
-		//	gpg.SetMotorDps(g.MOTOR_LEFT, 0)
-		//	gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
-		//}
 
 		gpg.Start()
-
-		/*if sensorVal < 1000 {
-			if ledOn {
-				gpg.SetLED(1, 0, 0, 0)
-				ledOn = false
-			} else {
-				gpg.SetLED(1, 200, 200, 200)
-				ledOn = !ledOn
-			}
-		} else if sensorVal > 2500 {
-			gpg.SetMotorDps(g.MOTOR_LEFT, 20)
-			gpg.Start()
-		} else {
-		}*/
 
 	}
 }
