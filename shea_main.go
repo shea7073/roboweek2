@@ -35,7 +35,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		if err != nil {
 			fmt.Errorf("Error reading from Sound Sensor %+v", err)
 		}
-		val, err := gpg.GetMotorEncoder(g.MOTOR_RIGHT)
+		encoderval, err := gpg.GetMotorEncoder(g.MOTOR_RIGHT)
 		if err != nil {
 			fmt.Errorf("Error reading from encoder %+v", err)
 		}
@@ -43,30 +43,30 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		if err != nil {
 			fmt.Errorf("Error reading from lidar %+v", err)
 		}
-		m[sensorVal] = val
+		m[sensorVal] = encoderval
 		fmt.Println("Light Value is ", sensorVal)
 		fmt.Println("Sound Value is ", soundSensorVal)
-		fmt.Println("encoder value: ", val)
+		fmt.Println("encoder value: ", encoderval)
 		fmt.Println("lidar value is ", lidarVal)
 		fmt.Println("Max light value is :", maxNumber(m), "encoder value is: ", m[maxNumber(m)])
 		time.Sleep(time.Second)
 
-		encode_vals = append(encode_vals, val)
+		encode_vals = append(encode_vals, encoderval)
 
 		if lidarVal < 30 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
 			gpg.SetMotorDps(g.MOTOR_LEFT, 0)
-		} else if key == 0 && val < encode_vals[1]+1200 {
+		} else if key == 0 && encoderval < encode_vals[1]+1200 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 		} else if key == 1 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 			gpg.SetMotorDps(g.MOTOR_LEFT, 30)
 		}
 
-		if val > encode_vals[1]+1200 && key == 0 {
+		if encoderval > encode_vals[1]+1200 && key == 0 {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, -30)
 			//gpg.SetMotorDps(g.MOTOR_LEFT, 30)
-			if count == (encode_vals[1]+1200)-m[maxNumber(m)] {
+			if encoderval <= m[maxNumber(m)] {
 				key = 1
 			}
 		}
