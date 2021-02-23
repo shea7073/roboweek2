@@ -11,6 +11,7 @@ import (
 )
 
 var encode_vals = make([]int64, 1)
+var finalencode_vals = make([]int64, 1)
 var count int64 = 0
 
 //robotRunLoop is the main function for the robot, the gobot framework
@@ -63,8 +64,9 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 
 		if val > encode_vals[1]+1200 && key == 0 {
-			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
-			key = 1
+			gpg.SetMotorDps(g.MOTOR_LEFT, 30)
+			//if count == (encode_vals[1]+1200)
+			//key = 1
 		}
 
 		fmt.Println(encode_vals)
