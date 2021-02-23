@@ -58,19 +58,6 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, gpg *g.Driver, lidarS
 	}
 }
 
-func maxNumber(m map[int]int64) int {
-	var max int
-	for n := range m {
-		max = n
-		break
-	}
-	for n := range m {
-		if n > max {
-			max = n
-		}
-	}
-	return max
-}
 func main() {
 	//We create the adaptors to connect the GoPiGo3 board with the Raspberry Pi 3
 	//also create any sensor drivers here
