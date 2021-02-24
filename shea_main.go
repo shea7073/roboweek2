@@ -53,7 +53,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 
 		encode_vals = append(encode_vals, val)
 
-		if lidarVal < 65 { //This will stop both motors if we are too close to an object
+		if lidarVal < 60 { //This will stop both motors if we are too close to an object
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 0)
 			gpg.SetMotorDps(g.MOTOR_LEFT, 0)
 		} else if !lightFound && !calibrated {
