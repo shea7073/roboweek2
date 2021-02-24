@@ -109,7 +109,7 @@ func main() {
 	//above to that function if you need them
 	lightFound := false
 	calibrated := false
-	rotation := true
+	rotation := false
 	m := make(map[int]int64)
 	mainRobotFunc := func() {
 		robotRunLoop(lightSensor, soundSensor, lidarSensor, gopigo3, m, lightFound, calibrated, rotation)
