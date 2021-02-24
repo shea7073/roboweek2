@@ -49,7 +49,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		fmt.Println("encoder value: ", val)
 		fmt.Println("lidar value is ", lidarVal)
 		fmt.Println("Max light value is :", maxNumber(m), "encoder value is: ", m[maxNumber(m)])
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond)
 
 		encode_vals = append(encode_vals, val)
 
