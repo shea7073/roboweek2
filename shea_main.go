@@ -20,7 +20,7 @@ var count int64 = 0
 //in other functions that this function calls. don't read from sensors or
 //use actuators frmo main or you will get a panic.
 //add
-func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, lidarSensor *i2c.LIDARLiteDriver, gpg *g.Driver, m map[int]int64, lightFound bool, calibrated bool) {
+func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.GroveSoundSensorDriver, lidarSensor *i2c.LIDARLiteDriver, gpg *g.Driver, m map[int]int64, lightFound bool, calibrated bool, rotation bool) {
 
 	err := lidarSensor.Start()
 	if err != nil {
@@ -62,10 +62,12 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 30)
 			gpg.SetMotorDps(g.MOTOR_LEFT, 30)
 		}
-
-		if val > encode_vals[1]+1200 && !lightFound {
+		if val > encode_vals[1]+1200 {
+			rotation = true
+		}
+		if rotation && !lightFound {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, -30)
-			if count == (encode_vals[1]+1200)-m[maxNumber(m)] {
+			if val <= m[maxNumber(m)] {
 				lightFound = true
 				calibrated = true
 			}
@@ -107,9 +109,10 @@ func main() {
 	//above to that function if you need them
 	lightFound := false
 	calibrated := false
+	rotation := true
 	m := make(map[int]int64)
 	mainRobotFunc := func() {
-		robotRunLoop(lightSensor, soundSensor, lidarSensor, gopigo3, m, lightFound, calibrated)
+		robotRunLoop(lightSensor, soundSensor, lidarSensor, gopigo3, m, lightFound, calibrated, rotation)
 	}
 
 	//this is the crux of the gobot framework. The factory function to create a new robot
