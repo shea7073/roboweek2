@@ -62,7 +62,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 			gpg.SetMotorDps(g.MOTOR_RIGHT, 40)
 			gpg.SetMotorDps(g.MOTOR_LEFT, 40)
 		}
-		if val > encode_vals[1]+1275 {
+		if val > encode_vals[1]+1400 {
 			rotation = true
 		}
 		if rotation && !lightFound {
