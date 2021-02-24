@@ -73,7 +73,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 			}
 		}
 
-		fmt.Println(encode_vals)
+		//fmt.Println(encode_vals)
 
 		gpg.Start()
 
