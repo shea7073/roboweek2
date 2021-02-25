@@ -67,7 +67,7 @@ func robotRunLoop(lightSensor *aio.GroveLightSensorDriver, soundSensor *aio.Grov
 		}
 		if rotation && !lightFound {
 			gpg.SetMotorDps(g.MOTOR_RIGHT, -90)
-			if val <= (m[maxNumber(m)] - 25) {
+			if val <= (m[maxNumber(m)]) {
 				lightFound = true
 				calibrated = true
 			}
